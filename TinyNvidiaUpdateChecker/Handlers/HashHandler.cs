@@ -25,9 +25,9 @@ namespace TinyNvidiaUpdateChecker.Handlers
     class HashHandler
     {
         /// <summary>
-        /// The MD5 hash for HAP v1.8.4
+        /// The MD5 hash for HAP v1.11.4
         /// </summary>
-        public static string HASH_HAP = "3e581ca2510270f69cd1c0db6fb7bf25";
+        public static string HASH_HAP = "3db1b5e66758c11ab44cd8b4cbdabd45";
 
         /// <summary>
         /// Calcluate the md5 hash of a file, we use it to verify the HTML Aglity Pack DLL so that people don't use the invalid version of it, 
