@@ -794,7 +794,7 @@ namespace TinyNvidiaUpdateChecker
 
                 try {
                     using (WebClient webClient = new WebClient()) {
-                        webClient.DownloadFile("https://github.com/ElPumpo/TinyNvidiaUpdateChecker/releases/download/v" + offlineVer + "/HtmlAgilityPack.dll", "HtmlAgilityPack.dll");
+                        webClient.DownloadFile("https://github.com/slewantoski/TinyNvidiaUpdateChecker/releases/download/v" + offlineVer + "/HtmlAgilityPack.dll", "HtmlAgilityPack.dll");
                     }
                     Console.Write("OK!");
                     Console.WriteLine();
