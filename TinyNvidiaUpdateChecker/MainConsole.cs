@@ -1043,7 +1043,7 @@ namespace TinyNvidiaUpdateChecker
 
             bool error = false;
             LibaryFile libaryFile = LibaryHandler.EvaluateLibary();
-            List<string> filesToExtract = new List<string> { "Display.Driver", "NVI2", "EULA.txt", "license.txt", "ListDevices.txt", "setup.cfg", "setup.exe" };
+            List<string> filesToExtract = new List<string> { "Display.Driver", "NVI2", "PPC", "EULA.txt", "license.txt", "ListDevices.txt", "setup.cfg", "setup.exe" };
 
             if (driverComponentsToInstall != null && driverComponentsToInstall.Count > 0) {
                 var lowerCaseEqualityComparer = new AnonymousEqualityComparer<string>((s1, s2) => s1.ToLower().Equals(s2.ToLower()), s => s.ToLower().GetHashCode());
