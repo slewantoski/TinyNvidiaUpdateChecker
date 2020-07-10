@@ -9,26 +9,8 @@ using System.Windows.Forms;
 namespace TinyNvidiaUpdateChecker
 {
 
-    /*
-    TinyNvidiaUpdateChecker - Check for NVIDIA GPU driver updates!
-    Copyright (C) 2016-2018 Hawaii_Beach
-    
-    This program Is free software: you can redistribute it And/Or modify
-    it under the terms Of the GNU General Public License As published by
-    the Free Software Foundation, either version 3 Of the License, Or
-    (at your option) any later version.
-
-    This program Is distributed In the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty Of
-    MERCHANTABILITY Or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License For more details.
-
-    You should have received a copy Of the GNU General Public License
-    along with this program.  If Not, see <http://www.gnu.org/licenses/>.
-    */
-
     /// <summary>
-    /// Powered by the .NET framework "Settings" function
+    /// Powered by .NET framework "Settings"
     /// </summary>
     class SettingManager
     {
@@ -55,22 +37,23 @@ namespace TinyNvidiaUpdateChecker
             ResetConfigMechanism(); // still needed 2017-09-24
 
             if (MainConsole.debug) {
-                Console.WriteLine("configFile: " + AppDomain.CurrentDomain.SetupInformation.ConfigurationFile);
+                Console.WriteLine($"configFile: {AppDomain.CurrentDomain.SetupInformation.ConfigurationFile}");
             }
 
             // create config file
             if (!MainConsole.configSwitch && !File.Exists(configFile)) {
-                Console.WriteLine("Generating configuration file, this only happenes once.");
+                Console.WriteLine("Generating configuration file, this only happens once.");
 
                 SetupSetting("Check for Updates");
                 SetupSetting("Minimal install");
+                SetupSetting("Download location");
 
                 Console.WriteLine();
             }
 
             VerifyConfig();
 
-            if(MainConsole.debug) Console.WriteLine();
+            if (MainConsole.debug) Console.WriteLine();
         }
 
         /// <summary>
@@ -80,30 +63,31 @@ namespace TinyNvidiaUpdateChecker
         {
             string CHECK_UPDATE = ReadSetting("Check for Updates");
             string MINIMAL_INSTALL = ReadSetting("Minimal install");
+            string DOWNLOAD_LOCATION = ReadSetting("Download location");
 
-            if(MainConsole.debug) {
-                Console.WriteLine("CHECK_UPDATE: " + CHECK_UPDATE);
-                Console.WriteLine("MINIMAL_INSTALL: " + MINIMAL_INSTALL);
+            if (MainConsole.debug) {
+                Console.WriteLine($"CHECK_UPDATE: {CHECK_UPDATE}");
+                Console.WriteLine($"MINIMAL_INSTALL: {MINIMAL_INSTALL}");
+                Console.WriteLine($"DOWNLOAD_LOCATION: {DOWNLOAD_LOCATION}");
             }
         }
 
         /// <summary>
         /// Reads setting from configuration file, and adds if requested key / value is missing - returns a string.</summary>
         /// <param name="key"> Config key to read value from.</param>
-        private static string ReadSetting(string key)
+        public static string ReadSetting(string key)
         {
             string result = null;
 
             try {
-                LogManager.Log("operation='read',key='" + key + "',val='" + ConfigurationManager.AppSettings[key] + "'", LogManager.Level.SETTING);
+                LogManager.Log($"operation='read',key='{key}',val='{ConfigurationManager.AppSettings[key]}'", LogManager.Level.SETTING);
 
                 if (ConfigurationManager.AppSettings[key] != null) {
                     result = ConfigurationManager.AppSettings[key];
                 } else {
-
                     // error reading key
                     Console.WriteLine();
-                    Console.WriteLine("Error reading configuration file, attempting to repair key '" + key + "' . . .");
+                    Console.WriteLine($"Error reading configuration file, attempting to repair key '{key}' . . .");
                     SetupSetting(key);
 
                     result = ConfigurationManager.AppSettings[key];
@@ -124,7 +108,7 @@ namespace TinyNvidiaUpdateChecker
         public static void SetSetting(string key, string val)
         {
             try {
-                LogManager.Log("operation='set',key='" + key + "',val='" + val + "'", LogManager.Level.SETTING);
+                LogManager.Log($"operation='set',key='{key}',val='{val}'", LogManager.Level.SETTING);
 
                 var configFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
                 var settings = configFile.AppSettings.Settings;
@@ -165,45 +149,48 @@ namespace TinyNvidiaUpdateChecker
         /// <seealso cref="SetSetting(string, string)"> Where settings are made.</seealso>
         private static void SetupSetting(string key)
         {
-            string message = null;
-            string[] value = null;
+            string[] values;
+            string value;
 
             switch (key) {
 
                 // check for update
                 case "Check for Updates":
-                    message = "Do you want to search for client updates?";
-                    value = new string[] { "true", "false" };
+                    values = new string[] {"true", "false"};
+                    value = SetupConfigYesNoMessagebox("Do you want to search for client updates?", values, "false");
                     break;
 
                 // minimal installer maker
                 case "Minimal install":
-                    message = "Do you want to perform a minimal install of the drivers? This will make sure you don't install telemetry and miscellaneous addons, but requires either WinRAR or 7-Zip to be installed.";
-                    value = new string[] { "true", "false" };
+                    values = new string[] {"true", "false"};
+                    value = SetupConfigYesNoMessagebox("Do you want to perform a minimal install of the drivers? This will make sure you don't install telemetry and miscellaneous addons, but requires either WinRAR or 7-Zip to be installed.", values, "false");
+                    break;
+
+                // download location
+                case "Download location":
+                    var locationChooserForm = new LocationChooserForm();
+                    value = locationChooserForm.OpenLocationChooserForm();
                     break;
 
                 default:
-                    MessageBox.Show("Unknown key '" + key + "'", "TinyNvidiaUpdateChecker", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    message = "Unknown";
-                    value = null;
+                    MessageBox.Show($"Unknown key '{key}'", "TinyNvidiaUpdateChecker", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    value = "unknown";
                     break;
-
             }
 
+            SetSetting(key, value);
+            LogManager.Log($"operation='setup',key='{key}',val='{value}'", LogManager.Level.SETTING);
+        }
+
+        private static string SetupConfigYesNoMessagebox(string text, string[] values, string defaultValue)
+        {
             if (!MainConsole.confirmDL) {
-                DialogResult dialogUpdates = MessageBox.Show(message, "TinyNvidiaUpdateChecker", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (dialogUpdates == DialogResult.Yes) {
-                    SetSetting(key, value[0]);
-                    LogManager.Log("operation='setup',key='" + key + "',val='" + value[0] + "'", LogManager.Level.SETTING);
-                } else {
-                    SetSetting(key, value[1]);
-                    LogManager.Log("operation='setup',key='" + key + "',val='" + value[1] + "'", LogManager.Level.SETTING);
-                }
-            } else {
-                SetSetting(key, value[1]);
-                LogManager.Log("operation='setup',key='" + key + "',val='" + value[1] + "'", LogManager.Level.SETTING);
+                DialogResult dialogResult = MessageBox.Show(text, "TinyNvidiaUpdateChecker", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                return (dialogResult == DialogResult.Yes) ? values[0] : values[1];
             }
-
+            else {
+                return defaultValue;
+            }
         }
 
         /// <summary>
@@ -249,7 +236,7 @@ namespace TinyNvidiaUpdateChecker
                     return false;
                 }
             }
-            Console.WriteLine("Could not retrive the key '" + key + "', this is bad!");
+            Console.WriteLine($"Could not retrive the key '{key}', this is bad!");
             return false;
         }
 

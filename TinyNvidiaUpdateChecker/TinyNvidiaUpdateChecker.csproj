@@ -67,8 +67,8 @@
     <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="HtmlAgilityPack, Version=1.11.4.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
-      <HintPath>..\packages\HtmlAgilityPack.1.11.4\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    <Reference Include="HtmlAgilityPack, Version=1.11.23.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.11.23\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -90,6 +90,12 @@
     <Compile Include="Handlers\GenericHandler.cs" />
     <Compile Include="Handlers\HashHandler.cs" />
     <Compile Include="Handlers\LibaryHandler.cs" />
+    <Compile Include="LocationChooserForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LocationChooserForm.Designer.cs">
+      <DependentUpon>LocationChooserForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="LogManager.cs" />
     <Compile Include="MainConsole.cs" />
     <Compile Include="Handlers\ProgressBar.cs" />
@@ -117,14 +123,10 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <None Include="Properties\app.config">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Properties\app.manifest">
       <SubType>Designer</SubType>
     </None>
     <None Include="LICENSE" />
-    <None Include="version" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />
@@ -135,6 +137,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DriverDialog.resx">
       <DependentUpon>DriverDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LocationChooserForm.resx">
+      <DependentUpon>LocationChooserForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

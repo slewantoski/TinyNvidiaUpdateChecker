@@ -8,9 +8,10 @@ namespace TinyNvidiaUpdateChecker
 {
     public partial class DownloaderForm : Form {
 
-        private Boolean isDownloadComplete = false;
+        private bool isDownloadComplete = false;
 
-        public DownloaderForm() {
+        public DownloaderForm()
+        {
             InitializeComponent();
         }
 
@@ -22,18 +23,18 @@ namespace TinyNvidiaUpdateChecker
                 webClient.DownloadProgressChanged += delegate (object sender, DownloadProgressChangedEventArgs e) {
                     progressBar1.Value = e.ProgressPercentage;
                 };
-                
+
                 webClient.DownloadFileCompleted += delegate (object sender, AsyncCompletedEventArgs e) {
                     if (e.Cancelled) {
                         File.Delete(savePath);
                     }
                     isDownloadComplete = true;
                 };
-                
+
                 webClient.DownloadFileAsync(downloadURL, savePath); // begin download
 
                 while(!isDownloadComplete) {
-                    Application.DoEvents(); // causes high CPU usage!
+                    Application.DoEvents(); // TODO: causes high CPU usage!
                 }
             }
         }

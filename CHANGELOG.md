@@ -4,6 +4,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.14.1] - 2020-05-15
+### Fixed
+- Not launching extracted drivers when using minimal installer
+
+## [1.14.0] - 2020-05-15
+I am back, sorry for being inactive the past years. I've been very busy with GTA related projects for years until recently where I got dropped out, and now focusing on my own side projects. I hope you all enjoy this new version!
+### Added
+- Download selection form, you can now select the download server. Hopefully this resolves issues with slow downloads
+- Compare HAP versions, making sure downloaded one is the correct one (which also prevents further errors)
+- We now run the NVIDIA installer with the `/noreboot` if the application is running quiet to prevent random reboots
+- Support for DCH drivers thanks to [Osspial](https://github.com/Osspial)
+
+### Changed
+- Updated HAP to v1.11.23
+- Download size in bytes are now properly grouped
+- Use string interpolation where available
+- Minor code improvements
+- Improved tooltips on the driver dialog
+- Disabled keyboard shortcuts in driver dialog
+
+### Fixed
+- Missing icon files for the forms
+- Minor typo
+- You can no longer navigate to other websites from the release description
+- Driver installer no longer hardcoded to run quiet if minimal installer is used
+- Replaced `/noeula` argument with `/nosplash` argument when minimal installer isn't used, which caused Gf Experience to install
+
 ## [1.13.0] - 2018-06-06
 ### Added
 - QuickEdit is now disabled, no more accidentally stalling the application

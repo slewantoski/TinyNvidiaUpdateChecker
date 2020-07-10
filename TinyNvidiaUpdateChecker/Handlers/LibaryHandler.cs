@@ -4,23 +4,6 @@ using System.IO;
 
 namespace TinyNvidiaUpdateChecker.Handlers
 {
-    /*
-    TinyNvidiaUpdateChecker - Check for NVIDIA GPU driver updates!
-    Copyright (C) 2016-2018 Hawaii_Beach
-    
-    This program Is free software: you can redistribute it And/Or modify
-    it under the terms Of the GNU General Public License As published by
-    the Free Software Foundation, either version 3 Of the License, Or
-    (at your option) any later version.
-
-    This program Is distributed In the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty Of
-    MERCHANTABILITY Or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License For more details.
-
-    You should have received a copy Of the GNU General Public License
-    along with this program.  If Not, see <http://www.gnu.org/licenses/>.
-    */
 
     class LibaryHandler
     {
@@ -34,8 +17,8 @@ namespace TinyNvidiaUpdateChecker.Handlers
         }
 
         public static LibaryFile EvaluateLibary() {
-            LibaryFile WinRAR = CheckWinRAR(); // CheckWinRAR
-            LibaryFile SevenZip = Check7Zip(); // Check7Zip
+            var WinRAR = CheckWinRAR();
+            var SevenZip = Check7Zip();
 
             if (WinRAR.IsInstalled()) {
                 return WinRAR;
@@ -48,73 +31,76 @@ namespace TinyNvidiaUpdateChecker.Handlers
 
         private static LibaryFile CheckWinRAR() {
             try {
-                using (RegistryKey regKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\WinRAR archiver", false)) {
-                    LogManager.Log("WinRAR path: " + regKey.GetValue("InstallLocation").ToString(), LogManager.Level.INFO);
+                using (var regKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\WinRAR archiver", false)) {
+                    LogManager.Log($"WinRAR path: {regKey.GetValue("InstallLocation")}", LogManager.Level.INFO);
                     return new LibaryFile(regKey.GetValue("InstallLocation").ToString(), Libary.WINRAR, true);
                 }
-            } catch (Exception) { }
+            } catch { }
 
             try {
-                using (RegistryKey regKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\WinRAR archiver", false)) {
-                    LogManager.Log("WinRAR path: " + regKey.GetValue("InstallLocation").ToString(), LogManager.Level.INFO);
+                using (var regKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\WinRAR archiver", false)) {
+                    LogManager.Log($"WinRAR path: {regKey.GetValue("InstallLocation")}", LogManager.Level.INFO);
                     return new LibaryFile(regKey.GetValue("InstallLocation").ToString(), Libary.WINRAR, true);
                 }
             }
-            catch (Exception) { }
+            catch { }
 
-            return new LibaryFile(false);
+            return new LibaryFile(Libary.WINRAR, false);
         }
 
         private static LibaryFile Check7Zip() {
             /* Debug directory */
             if(Directory.Exists("7-Zip")) {
-                LogManager.Log("7-Zip path: " + Path.GetFullPath("7-Zip") + @"\", LogManager.Level.INFO);
+                LogManager.Log($"7-Zip path: {Path.GetFullPath("7-Zip") + @"\"}", LogManager.Level.INFO);
                 return new LibaryFile(Path.GetFullPath("7-Zip") + @"\", Libary.SEVENZIP, true);
             }
 
             /* Default installer */
 
             // amd64 installer on amd64 system, or x86 on x86 system
-            try
-            {
-                using (RegistryKey regKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\7-Zip", false)) {
-                    LogManager.Log("7-Zip path: " + regKey.GetValue("InstallLocation").ToString(), LogManager.Level.INFO);
-                    return new LibaryFile(regKey.GetValue("InstallLocation").ToString(), Libary.SEVENZIP, true);
+            try {
+                using (var regKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\7-Zip", false)) {
+                    if (regKey != null) {
+                        LogManager.Log($"7-Zip path: {regKey.GetValue("InstallLocation")}", LogManager.Level.INFO);
+                        return new LibaryFile(regKey.GetValue("InstallLocation").ToString(), Libary.SEVENZIP, true);
+                    }
                 }
-            }
-            catch (Exception) { }
+            } catch { }
 
             // x86 intaller on amd64 system
             if (is64) {
                 try {
-                    using (RegistryKey regKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\7-Zip", false)) {
-                        LogManager.Log("7-Zip path: " + regKey.GetValue("InstallLocation").ToString(), LogManager.Level.INFO);
-                        return new LibaryFile(regKey.GetValue("InstallLocation").ToString(), Libary.SEVENZIP, true);
+                    using (var regKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\7-Zip", false)) {
+                        if (regKey != null) {
+                            LogManager.Log($"7-Zip path: {regKey.GetValue("InstallLocation")}", LogManager.Level.INFO);
+                            return new LibaryFile(regKey.GetValue("InstallLocation").ToString(), Libary.SEVENZIP, true);
+                        }
                     }
-                }
-                catch (Exception) { }
+                } catch { }
             }
 
             /* MSI installer */
             
             // amd64 installer on amd64 system, or x86 on x86 system
             try {
-                using (RegistryKey regKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\7-Zip", false)) {
-                    LogManager.Log("7-Zip path: " + regKey.GetValue("Path").ToString(), LogManager.Level.INFO);
-                    return new LibaryFile(regKey.GetValue("Path").ToString(), Libary.SEVENZIP, true);
+                using (var regKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\7-Zip", false)) {
+                    if (regKey != null) {
+                        LogManager.Log($"7-Zip path: {regKey.GetValue("Path")}", LogManager.Level.INFO);
+                        return new LibaryFile(regKey.GetValue("Path").ToString(), Libary.SEVENZIP, true);
+                    }
                 }
-            }
-            catch (Exception) { }
+            } catch { }
 
             // x86 intaller on amd64 system
             if (is64) {
                 try {
-                    using (RegistryKey regKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\WOW6432Node\7-Zip", false)) {
-                        LogManager.Log("7-Zip path: " + regKey.GetValue("Path").ToString(), LogManager.Level.INFO);
-                        return new LibaryFile(regKey.GetValue("Path").ToString(), Libary.SEVENZIP, true);
+                    using (var regKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\WOW6432Node\7-Zip", false)) {
+                        if (regKey != null) {
+                            LogManager.Log($"7-Zip path: {regKey.GetValue("Path")}", LogManager.Level.INFO);
+                            return new LibaryFile(regKey.GetValue("Path").ToString(), Libary.SEVENZIP, true);
+                        }
                     }
-                }
-                catch (Exception) { }
+                } catch { }
             }
 
             /* Scoop support */
@@ -124,7 +110,7 @@ namespace TinyNvidiaUpdateChecker.Handlers
             path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "scoop", "apps", "7zip", "current");
             if (Directory.Exists(path)) {
                 path += @"\";
-                LogManager.Log("7-Zip path: " + path, LogManager.Level.INFO);
+                LogManager.Log($"7-Zip path: {path}", LogManager.Level.INFO);
                 return new LibaryFile(path, Libary.SEVENZIP, true);
             }
 
@@ -132,7 +118,7 @@ namespace TinyNvidiaUpdateChecker.Handlers
             path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "scoop", "apps", "7zip", "current");
             if (Directory.Exists(path)) {
                 path += @"\";
-                LogManager.Log("7-Zip path: " + path, LogManager.Level.INFO);
+                LogManager.Log($"7-Zip path: {path}", LogManager.Level.INFO);
                 return new LibaryFile(path, Libary.SEVENZIP, true);
             }
 
@@ -142,7 +128,7 @@ namespace TinyNvidiaUpdateChecker.Handlers
             path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "7-Zip");
             if (Directory.Exists(path)) {
                 path += @"\";
-                LogManager.Log("7-Zip path: " + path, LogManager.Level.INFO);
+                LogManager.Log($"7-Zip path: {path}", LogManager.Level.INFO);
                 return new LibaryFile(path, Libary.SEVENZIP, true);
             }
 
@@ -150,42 +136,57 @@ namespace TinyNvidiaUpdateChecker.Handlers
             path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), "7-Zip");
             if (Directory.Exists(path)) {
                 path += @"\";
-                LogManager.Log("7-Zip path: " + path, LogManager.Level.INFO);
+                LogManager.Log($"7-Zip path: {path}", LogManager.Level.INFO);
                 return new LibaryFile(path, Libary.SEVENZIP, true);
             }
 
-            return new LibaryFile(false);
+            return new LibaryFile(Libary.SEVENZIP, false);
         }
     }
-
+    
+    /// <summary>
+    /// Libaries that can extract the nvidia driver file
+    /// </summary>
     class LibaryFile
     {
-        public string InstallLocation;
-        public LibaryHandler.Libary libary;
-        public bool installed;
+        string installationDirectory;
+        LibaryHandler.Libary libary;
+        bool isInstalled;
 
-        public LibaryFile(string InstallLocation, LibaryHandler.Libary libary) {
-            this.InstallLocation = InstallLocation;
+        public LibaryFile(string installationDirectory, LibaryHandler.Libary libary, bool isInstalled) {
+            this.installationDirectory = installationDirectory;
             this.libary = libary;
+            this.isInstalled = isInstalled;
         }
 
-        public LibaryFile(string InstallLocation, LibaryHandler.Libary libary, bool installed)
-        {
-            this.InstallLocation = InstallLocation;
+        public LibaryFile(LibaryHandler.Libary libary, bool isInstalled) {
             this.libary = libary;
-            this.installed = installed;
+            this.isInstalled = isInstalled;
         }
 
-        public LibaryFile(bool installed) {
-            this.installed = installed;
+        /// <summary>
+        /// Is the libary installed?
+        /// </summary>
+        public bool IsInstalled() {
+            return this.isInstalled;
         }
 
-        public bool IsInstalled(){
-            return installed;
+        /// <summary>
+        /// Libary name
+        /// </summary>
+        public LibaryHandler.Libary LibaryName() {
+            return libary;
+        }
+
+        /// <summary>
+        /// Get the absolute path to the libary, ending with a backslash
+        /// </summary>
+        public string GetInstallationDirectory() {
+            return installationDirectory;
         }
 
         public override string ToString() {
-            return "InstallLocation: " + InstallLocation + " | libary: " + libary + " | isInstalled: " + installed;
+            return $"installationDirectory: {installationDirectory} | libary: {libary} | isInstalled: {isInstalled}";
         }
     }
 }
