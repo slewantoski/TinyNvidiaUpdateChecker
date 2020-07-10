@@ -50,10 +50,10 @@ namespace TinyNvidiaUpdateChecker
             // DownloadInstallButton
             // 
             this.DownloadInstallButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.DownloadInstallButton.Location = new System.Drawing.Point(28, 160);
+            this.DownloadInstallButton.Location = new System.Drawing.Point(9, 180);
             this.DownloadInstallButton.Margin = new System.Windows.Forms.Padding(2);
             this.DownloadInstallButton.Name = "DownloadInstallButton";
-            this.DownloadInstallButton.Size = new System.Drawing.Size(82, 41);
+            this.DownloadInstallButton.Size = new System.Drawing.Size(95, 44);
             this.DownloadInstallButton.TabIndex = 0;
             this.DownloadInstallButton.Text = "Install Now";
             this.toolTip1.SetToolTip(this.DownloadInstallButton, resources.GetString("DownloadInstallButton.ToolTip"));
@@ -63,10 +63,10 @@ namespace TinyNvidiaUpdateChecker
             // DownloadBtn
             // 
             this.DownloadBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.DownloadBtn.Location = new System.Drawing.Point(115, 160);
+            this.DownloadBtn.Location = new System.Drawing.Point(108, 180);
             this.DownloadBtn.Margin = new System.Windows.Forms.Padding(2);
             this.DownloadBtn.Name = "DownloadBtn";
-            this.DownloadBtn.Size = new System.Drawing.Size(82, 41);
+            this.DownloadBtn.Size = new System.Drawing.Size(95, 44);
             this.DownloadBtn.TabIndex = 1;
             this.DownloadBtn.Text = "Download Only";
             this.toolTip1.SetToolTip(this.DownloadBtn, resources.GetString("DownloadBtn.ToolTip"));
@@ -76,10 +76,10 @@ namespace TinyNvidiaUpdateChecker
             // NotesBtn
             // 
             this.NotesBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.NotesBtn.Location = new System.Drawing.Point(201, 160);
+            this.NotesBtn.Location = new System.Drawing.Point(207, 180);
             this.NotesBtn.Margin = new System.Windows.Forms.Padding(2);
             this.NotesBtn.Name = "NotesBtn";
-            this.NotesBtn.Size = new System.Drawing.Size(82, 41);
+            this.NotesBtn.Size = new System.Drawing.Size(95, 44);
             this.NotesBtn.TabIndex = 2;
             this.NotesBtn.Text = "View Release Notes";
             this.toolTip1.SetToolTip(this.NotesBtn, "View the full pdf release notes, which contains:\r\n- what\'s new\r\n- what\'s fixed\r\n-" +
@@ -90,49 +90,49 @@ namespace TinyNvidiaUpdateChecker
             // titleLabel
             // 
             this.titleLabel.AutoSize = true;
-            this.titleLabel.Location = new System.Drawing.Point(9, 9);
+            this.titleLabel.Location = new System.Drawing.Point(9, 10);
             this.titleLabel.Name = "titleLabel";
-            this.titleLabel.Size = new System.Drawing.Size(260, 17);
+            this.titleLabel.Size = new System.Drawing.Size(196, 13);
             this.titleLabel.TabIndex = 5;
             this.titleLabel.Text = "New graphics card drivers are available!\r\n";
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBox1.Controls.Add(this.sizeLabel);
             this.groupBox1.Controls.Add(this.releasedLabel);
             this.groupBox1.Controls.Add(this.versionLabel);
-            this.groupBox1.Location = new System.Drawing.Point(315, 40);
+            this.groupBox1.Location = new System.Drawing.Point(309, 33);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox1.Size = new System.Drawing.Size(150, 116);
+            this.groupBox1.Size = new System.Drawing.Size(195, 123);
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "File Information";
             // 
             // sizeLabel
             // 
-            this.sizeLabel.Location = new System.Drawing.Point(6, 104);
+            this.sizeLabel.Location = new System.Drawing.Point(4, 90);
             this.sizeLabel.Name = "sizeLabel";
-            this.sizeLabel.Size = new System.Drawing.Size(188, 44);
+            this.sizeLabel.Size = new System.Drawing.Size(188, 31);
             this.sizeLabel.TabIndex = 6;
             this.sizeLabel.Text = "Size: ";
             this.sizeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // releasedLabel
             // 
-            this.releasedLabel.Location = new System.Drawing.Point(6, 62);
+            this.releasedLabel.Location = new System.Drawing.Point(4, 56);
             this.releasedLabel.Name = "releasedLabel";
-            this.releasedLabel.Size = new System.Drawing.Size(188, 44);
+            this.releasedLabel.Size = new System.Drawing.Size(188, 26);
             this.releasedLabel.TabIndex = 5;
             this.releasedLabel.Text = "Released: ";
             this.releasedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // versionLabel
             // 
-            this.versionLabel.Location = new System.Drawing.Point(6, 18);
+            this.versionLabel.Location = new System.Drawing.Point(4, 17);
             this.versionLabel.Name = "versionLabel";
-            this.versionLabel.Size = new System.Drawing.Size(188, 44);
+            this.versionLabel.Size = new System.Drawing.Size(188, 32);
             this.versionLabel.TabIndex = 5;
             this.versionLabel.Text = "Version: ";
             this.versionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -141,10 +141,10 @@ namespace TinyNvidiaUpdateChecker
             // IgnoreBtn
             // 
             this.IgnoreBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.IgnoreBtn.Location = new System.Drawing.Point(287, 160);
+            this.IgnoreBtn.Location = new System.Drawing.Point(306, 180);
             this.IgnoreBtn.Margin = new System.Windows.Forms.Padding(2);
             this.IgnoreBtn.Name = "IgnoreBtn";
-            this.IgnoreBtn.Size = new System.Drawing.Size(82, 41);
+            this.IgnoreBtn.Size = new System.Drawing.Size(95, 44);
             this.IgnoreBtn.TabIndex = 3;
             this.IgnoreBtn.Text = "Ignore";
             this.IgnoreBtn.UseVisualStyleBackColor = true;
@@ -153,9 +153,9 @@ namespace TinyNvidiaUpdateChecker
             // CopyUrlBtn
             // 
             this.CopyUrlBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.CopyUrlBtn.Location = new System.Drawing.Point(373, 160);
+            this.CopyUrlBtn.Location = new System.Drawing.Point(405, 180);
             this.CopyUrlBtn.Name = "CopyUrlBtn";
-            this.CopyUrlBtn.Size = new System.Drawing.Size(82, 41);
+            this.CopyUrlBtn.Size = new System.Drawing.Size(95, 44);
             this.CopyUrlBtn.TabIndex = 2;
             this.CopyUrlBtn.Text = "Copy File Url";
             this.toolTip1.SetToolTip(this.CopyUrlBtn, "Copy file url of the graphics drives");
@@ -166,23 +166,23 @@ namespace TinyNvidiaUpdateChecker
             // 
             this.webBrowser1.AllowNavigation = false;
             this.webBrowser1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-                  | System.Windows.Forms.AnchorStyles.Left)));
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.webBrowser1.IsWebBrowserContextMenuEnabled = false;
-            this.webBrowser1.Location = new System.Drawing.Point(9, 22);
+            this.webBrowser1.Location = new System.Drawing.Point(9, 24);
             this.webBrowser1.Margin = new System.Windows.Forms.Padding(2);
-            this.webBrowser1.MinimumSize = new System.Drawing.Size(15, 15);
+            this.webBrowser1.MinimumSize = new System.Drawing.Size(15, 16);
             this.webBrowser1.Name = "webBrowser1";
             this.webBrowser1.ScriptErrorsSuppressed = true;
-            this.webBrowser1.Size = new System.Drawing.Size(291, 134);
+            this.webBrowser1.Size = new System.Drawing.Size(291, 152);
             this.webBrowser1.TabIndex = 4;
             this.webBrowser1.WebBrowserShortcutsEnabled = false;
             this.webBrowser1.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.webBrowser1_DocumentCompleted);
             // 
             // DriverDialog
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(463, 211);
+            this.ClientSize = new System.Drawing.Size(513, 236);
             this.Controls.Add(this.webBrowser1);
             this.Controls.Add(this.IgnoreBtn);
             this.Controls.Add(this.groupBox1);
@@ -192,7 +192,7 @@ namespace TinyNvidiaUpdateChecker
             this.Controls.Add(this.DownloadInstallButton);
             this.Controls.Add(this.CopyUrlBtn);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Icon = System.Drawing.Icon.ExtractAssociatedIcon(System.Windows.Forms.Application.Execut‌​ablePath);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "DriverDialog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "TinyNvidiaUpdateChecker - Update Dialog";
@@ -216,7 +216,6 @@ namespace TinyNvidiaUpdateChecker
         private System.Windows.Forms.WebBrowser webBrowser1;
         private ToolTip toolTip1;
         private Button CopyUrlBtn;
-        private Button NotesBtn;
         private Label sizeLabel;
     }
 }
